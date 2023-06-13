@@ -1,91 +1,71 @@
-import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import decode from "jwt-decode";
+import React , {useEffect} from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import decode from 'jwt-decode'
+import { useSelector, useDispatch } from 'react-redux'
+import { setCurrentUser } from '../../actions/currentUser'
 
-import logo from "../../assets/logo.png";
-import search from "../../assets/search-solid.svg";
-import Avatar from "../../components/Avatar/Avatar";
-import "./Navbar.css";
-import { setCurrentUser } from "../../actions/currentUser";
-import bars from "../../assets/bars-solid.svg";
+import './Navbar.css'
+import logo from '../../assests/stacklogo.png'
+import search from '../../assests/searchlogo.svg'
+import Avatar from '../../components/Avatar/Avatar'
 
-const Navbar = ({ handleSlideIn }) => {
-  const dispatch = useDispatch();
-  var User = useSelector((state) => state.currentUserReducer);
-  const navigate = useNavigate();
+const Navbar = () => {
 
-  const handleLogout = () => {
-    dispatch({ type: "LOGOUT" });
-    navigate("/");
-    dispatch(setCurrentUser(null));
-  };
+    var User = useSelector((state) => (state.currentUserReducer))
+    const dispatch = useDispatch()
+    const Navigate = useNavigate()
 
-  useEffect(() => {
-    const token = User?.token;
-    if (token) {
-      const decodedToken = decode(token);
-      if (decodedToken.exp * 1000 < new Date().getTime()) {
-              handleLogout();
-      }
+    useEffect(() => {
+        const token = User?.token;
+        if (token) {
+          const decodedToken = decode(token);
+          if (decodedToken.exp * 1000 < new Date().getTime()) {
+            handleLogout();
+          }
+        }
+        dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
+      }, [User?.token, dispatch]);
+
+    const handleLogout = () => {
+        dispatch({type: "LOGOUT"})
+        Navigate('/')
+        dispatch(setCurrentUser(null))
+        alert("You have been logged out..")
     }
-    dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
-  }, [User?.token, dispatch]);
 
   return (
-    <nav className="main-nav">
-      <div className="navbar">
-        <button className="slide-in-icon" onClick={() => handleSlideIn()}>
-          <img src={bars} alt="bars" width="15" />
-        </button>
-        <div className="navbar-1">
-          <Link to="/" className="nav-item nav-logo">
-            <img src={logo} alt="logo" />
-          </Link>
-          <Link to="/" className="nav-item nav-btn res-nav">
-            About
-          </Link>
-          <Link to="/" className="nav-item nav-btn res-nav">
-            Products
-          </Link>
-          <Link to="/" className="nav-item nav-btn res-nav">
-            For Teams
-          </Link>
-          <form>
-            <input type="text" placeholder="Search..." />
-            <img src={search} alt="search" width="18" className="search-icon" />
-          </form>
-        </div>
-        <div className="navbar-2">
-          {User === null ? (
-            <Link to="/Auth" className="nav-item nav-links">
-              Log in
-            </Link>
-          ) : (
-            <>
-              <Avatar
-                backgroundColor="#009dff"
-                px="10px"
-                py="7px"
-                borderRadius="50%"
-                color="white"
-              >
-                <Link
-                  to={`/Users/${User?.result?._id}`}
-                  style={{ color: "white", textDecoration: "none" }}
-                >
-                  {User.result.name.charAt(0).toUpperCase()}
-                </Link>
-              </Avatar>
-              <button className="nav-item nav-links" onClick={handleLogout}>
-                Log out
-              </button>
-            </>
-          )}
-        </div>
-      </div>
-    </nav>
-  );
-};
+    <nav className='main-nav'>
+        <div className='navbar'>
 
-export default Navbar;
+            <Link to='/' className='nav-item nav-logo'>
+                <img src={logo} alt="logo" width={140} height={40}/>
+            </Link>
+
+            <Link to='/About' className='nav-item nav-btn'>About</Link>
+            <Link to='/Product' className='nav-item nav-btn'>Products</Link>
+            <Link to='/Teams' className='nav-item nav-btn'>For Teams</Link>
+
+            <form>
+                <input type="text" placeholder='Search...' />
+                <img src={search} alt="searchicon" className='search-icon' width={18}/>
+            </form>
+
+            { User === null ? 
+                <Link to='/Auth' className='nav-item  nav-links' >
+                    Log in
+                </Link> :
+
+                <>
+                <Avatar className='navchild'>
+                    <Link to={`/User/${User?.result?._id}`} style={{color:'white', textDecoration:'none'}}>{User.result.name.charAt(0).toUpperCase()}</Link>
+                </Avatar>
+                <button className='nav-item  nav-links' onClick={handleLogout}>Log out</button>
+                </>
+            }
+
+        </div>
+    </nav>
+  )
+}
+
+export default Navbar
