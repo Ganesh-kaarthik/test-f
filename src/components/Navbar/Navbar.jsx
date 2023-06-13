@@ -15,7 +15,13 @@ const Navbar = ({ handleSlideIn }) => {
   var User = useSelector((state) => state.currentUserReducer);
   const navigate = useNavigate();
 
-
+const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    navigate('/');
+    dispatch(setCurrentUser(null));
+    alert("You have been logged out..");
+  };
+  
   useEffect(() => {
     const token = User?.token;
     if (token) {
@@ -27,13 +33,7 @@ const Navbar = ({ handleSlideIn }) => {
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
   }, [User?.token, dispatch]);
 
-    const handleLogout = () => {
-    dispatch({ type: "LOGOUT" });
-    navigate('/');
-    dispatch(setCurrentUser(null));
-    alert("You have been logged out..");
-  };
-  
+    
   return (
     <nav className="main-nav">
       <div className="navbar">
