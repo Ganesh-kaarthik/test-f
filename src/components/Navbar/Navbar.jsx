@@ -19,7 +19,6 @@ const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
     navigate('/');
     dispatch(setCurrentUser(null));
-    alert("You have been logged out..");
   };
   
   useEffect(() => {
