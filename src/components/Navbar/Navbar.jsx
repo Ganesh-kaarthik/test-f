@@ -10,17 +10,17 @@ import "./Navbar.css";
 import { setCurrentUser } from "../../actions/currentUser";
 import bars from "../../assets/bars-solid.svg";
 
-const Navbar = () => {
+const Navbar = ({ handleSlideIn }) => {
   const dispatch = useDispatch();
   var User = useSelector((state) => state.currentUserReducer);
   const navigate = useNavigate();
 
-const handleLogout = () => {
+  const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
-    navigate('/');
+    navigate("/");
     dispatch(setCurrentUser(null));
   };
-  
+
   useEffect(() => {
     const token = User?.token;
     if (token) {
@@ -32,7 +32,6 @@ const handleLogout = () => {
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("Profile"))));
   }, [User?.token, dispatch]);
 
-    
   return (
     <nav className="main-nav">
       <div className="navbar">
