@@ -29,10 +29,11 @@ const Navbar = ({ handleSlideIn }) => {
 
     const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
-    navigate("/");
+    navigate('/');
     dispatch(setCurrentUser(null));
     alert("You have been logged out..");
   };
+  
   return (
     <nav className="main-nav">
       <div className="navbar">
