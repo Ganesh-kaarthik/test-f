@@ -12,6 +12,7 @@ import bars from "../../assets/bars-solid.svg";
 
 const Navbar = ({ handleSlideIn }) => {
   const dispatch = useDispatch();
+  const Navigate = useNavigate();
   var User = useSelector((state) => state.currentUserReducer);
   const navigate = useNavigate();
 
