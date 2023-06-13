@@ -17,7 +17,7 @@ const Navbar = ({ handleSlideIn }) => {
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
-    navigate("/");
+    Navigate("/");
     dispatch(setCurrentUser(null));
   };
 
