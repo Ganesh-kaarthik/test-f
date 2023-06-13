@@ -19,6 +19,7 @@ const Navbar = ({ handleSlideIn }) => {
     dispatch({ type: "LOGOUT" });
     Navigate("/");
     dispatch(setCurrentUser(null));
+    alert("You have been logged out..")
   };
 
   useEffect(() => {
