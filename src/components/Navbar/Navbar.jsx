@@ -10,7 +10,7 @@ import "./Navbar.css";
 import { setCurrentUser } from "../../actions/currentUser";
 import bars from "../../assets/bars-solid.svg";
 
-const Navbar = ({ handleSlideIn }) => {
+const Navbar = () => {
   const dispatch = useDispatch();
   var User = useSelector((state) => state.currentUserReducer);
   const navigate = useNavigate();
